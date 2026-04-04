@@ -1,616 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About | Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --cream: #FAF5EE;
-    --warm-white: #F2EBE0;
-    --sand: #E6D9C7;
-    --terracotta: #C45B3A;
-    --terracotta-light: #D97B5D;
-    --ink: #1A1612;
-    --ink-soft: #3D352C;
-    --warm-gray: #8A7E72;
-    --olive: #5B6B4A;
-    --olive-light: #7A8E66;
-    --accent-gold: #C9A84C;
-    --card-bg: rgba(255,255,255,0.55);
-    --card-border: rgba(198,183,164,0.4);
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Instrument Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
-
-  /* --- NOISE OVERLAY --- */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  /* --- NAV --- */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    backdrop-filter: blur(20px);
-    background: rgba(250,245,238,0.85);
-    border-bottom: 1px solid var(--card-border);
-    transition: all 0.3s ease;
-  }
-
-  .logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.5rem;
-    color: var(--terracotta);
-    text-decoration: none;
-    letter-spacing: -0.5px;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-    align-items: center;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    font-weight: 500;
-    position: relative;
-    transition: color 0.3s;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px; left: 0;
-    width: 0; height: 2px;
-    background: var(--terracotta);
-    transition: width 0.3s ease;
-  }
-
-  .nav-links a:hover { color: var(--terracotta); }
-  .nav-links a:hover::after { width: 100%; }
-  .nav-links a.active { color: var(--terracotta); }
-  .nav-links a.active::after { width: 100%; }
-
-  .nav-cta {
-    background: var(--ink);
-    color: var(--cream) !important;
-    padding: 8px 20px;
-    border-radius: 100px;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
-    transition: all 0.3s !important;
-  }
-  .nav-cta::after { display: none !important; }
-  .nav-cta:hover { background: var(--terracotta) !important; color: var(--cream) !important; transform: translateY(-1px); }
-
-  /* --- BREADCRUMB --- */
-  .breadcrumb {
-    padding: 120px 48px 0;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-size: 0.8rem;
-    color: var(--warm-gray);
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    animation: fadeUp 0.6s ease both;
-  }
-  .breadcrumb span { opacity: 0.5; }
-
-  /* --- HERO --- */
-  .hero {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 48px 0;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 64px;
-    align-items: start;
-  }
-
-  .hero-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--terracotta);
-    font-weight: 600;
-    margin-bottom: 20px;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
-    line-height: 1.15;
-    color: var(--ink);
-    letter-spacing: -1px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.7s ease 0.2s both;
-  }
-
-  .hero h1 em {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--terracotta);
-  }
-
-  .hero-text {
-    font-size: 1.05rem;
-    color: var(--ink-soft);
-    line-height: 1.75;
-    max-width: 540px;
-    animation: fadeUp 0.7s ease 0.3s both;
-  }
-
-  /* --- AVATAR CARD --- */
-  .avatar-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 32px;
-    text-align: center;
-    animation: fadeUp 0.8s ease 0.35s both;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .avatar-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--terracotta), var(--accent-gold), var(--olive));
-  }
-
-  .avatar-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--sand), var(--warm-white));
-    margin: 0 auto 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    border: 3px solid var(--warm-white);
-    box-shadow: 0 8px 32px rgba(26,22,18,0.08);
-  }
-
-  .avatar-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.25rem;
-    margin-bottom: 4px;
-  }
-
-  .avatar-sub {
-    font-size: 0.85rem;
-    color: var(--warm-gray);
-    font-style: italic;
-  }
-
-  /* --- STAT PILLS --- */
-  .stats {
-    max-width: 1200px;
-    margin: 56px auto 0;
-    padding: 0 48px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .stat {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-sm);
-    padding: 24px;
-    transition: all 0.35s ease;
-    animation: fadeUp 0.7s ease both;
-  }
-
-  .stat:nth-child(1) { animation-delay: 0.4s; }
-  .stat:nth-child(2) { animation-delay: 0.5s; }
-  .stat:nth-child(3) { animation-delay: 0.6s; }
-  .stat:nth-child(4) { animation-delay: 0.7s; }
-
-  .stat:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(26,22,18,0.08);
-    border-color: var(--terracotta-light);
-  }
-
-  .stat-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--warm-gray);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .stat-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.35rem;
-    color: var(--terracotta);
-    margin-bottom: 6px;
-  }
-
-  .stat-desc {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-
-  /* --- SECTION DIVIDER --- */
-  .section-divider {
-    max-width: 1200px;
-    margin: 72px auto 0;
-    padding: 0 48px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .section-divider::before,
-  .section-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--sand);
-  }
-
-  .section-divider span {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--warm-gray);
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  /* --- VALUE SECTION --- */
-  .value-section {
-    max-width: 1200px;
-    margin: 48px auto 0;
-    padding: 0 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    animation: fadeUp 0.7s ease both;
-  }
-
-  .value-section h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    line-height: 1.25;
-    letter-spacing: -0.5px;
-  }
-
-  .value-section h2 em {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--terracotta);
-  }
-
-  .value-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 32px;
-  }
-
-  .value-card h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-    color: var(--ink);
-  }
-
-  .value-card p {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    line-height: 1.7;
-  }
-
-  .value-pair {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  /* --- HOW I WORK --- */
-  .how-section {
-    max-width: 1200px;
-    margin: 72px auto 0;
-    padding: 0 48px;
-  }
-
-  .how-section > h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    line-height: 1.25;
-    letter-spacing: -0.5px;
-    max-width: 600px;
-    margin-bottom: 40px;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .how-section > h2 em {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--olive);
-  }
-
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .how-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-sm);
-    padding: 28px 24px;
-    transition: all 0.35s ease;
-    animation: fadeUp 0.7s ease both;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .how-card:nth-child(1) { animation-delay: 0.1s; }
-  .how-card:nth-child(2) { animation-delay: 0.2s; }
-  .how-card:nth-child(3) { animation-delay: 0.3s; }
-  .how-card:nth-child(4) { animation-delay: 0.4s; }
-
-  .how-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(26,22,18,0.08);
-  }
-
-  .how-card-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-    font-size: 1.2rem;
-  }
-
-  .how-card:nth-child(1) .how-card-icon { background: rgba(196,91,58,0.12); }
-  .how-card:nth-child(2) .how-card-icon { background: rgba(201,168,76,0.15); }
-  .how-card:nth-child(3) .how-card-icon { background: rgba(91,107,74,0.15); }
-  .how-card:nth-child(4) .how-card-icon { background: rgba(138,126,114,0.15); }
-
-  .how-card h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.05rem;
-    margin-bottom: 8px;
-  }
-
-  .how-card p {
-    font-size: 0.82rem;
-    color: var(--ink-soft);
-    line-height: 1.65;
-  }
-
-  /* --- TIMELINE --- */
-  .timeline-section {
-    max-width: 1200px;
-    margin: 80px auto 0;
-    padding: 0 48px;
-  }
-
-  .timeline-section > h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    line-height: 1.25;
-    letter-spacing: -0.5px;
-    margin-bottom: 48px;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .timeline-section > h2 em {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--terracotta);
-  }
-
-  .timeline {
-    position: relative;
-    padding-left: 40px;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 8px; top: 8px; bottom: 8px;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--terracotta), var(--sand));
-    border-radius: 2px;
-  }
-
-  .timeline-item {
-    position: relative;
-    padding-bottom: 40px;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
-  .timeline-item:nth-child(2) { animation-delay: 0.2s; }
-  .timeline-item:nth-child(3) { animation-delay: 0.3s; }
-  .timeline-item:nth-child(4) { animation-delay: 0.4s; }
-  .timeline-item:nth-child(5) { animation-delay: 0.5s; }
-  .timeline-item:nth-child(6) { animation-delay: 0.6s; }
-
-  .timeline-dot {
-    position: absolute;
-    left: -36px; top: 6px;
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--terracotta);
-    border: 3px solid var(--cream);
-    box-shadow: 0 0 0 2px var(--terracotta);
-  }
-
-  .timeline-item:last-child .timeline-dot {
-    background: var(--sand);
-    box-shadow: 0 0 0 2px var(--sand);
-  }
-
-  .timeline-date {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--terracotta);
-    margin-bottom: 6px;
-  }
-
-  .timeline-role {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.15rem;
-    margin-bottom: 6px;
-  }
-
-  .timeline-company {
-    font-size: 0.85rem;
-    color: var(--warm-gray);
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-
-  .timeline-desc {
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-    line-height: 1.7;
-    max-width: 560px;
-  }
-
-  /* --- FOOTER --- */
-  footer {
-    max-width: 1200px;
-    margin: 80px auto 0;
-    padding: 40px 48px 48px;
-    border-top: 1px solid var(--sand);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .social-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-  }
-
-  .social-links a {
-    text-decoration: none;
-    font-size: 0.82rem;
-    color: var(--warm-gray);
-    font-weight: 500;
-    transition: color 0.3s;
-    position: relative;
-  }
-
-  .social-links a:hover { color: var(--terracotta); }
-
-  .footer-note {
-    font-size: 0.8rem;
-    color: var(--warm-gray);
-    font-style: italic;
-  }
-
-  /* --- ANIMATIONS --- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* --- RESPONSIVE --- */
-  @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .breadcrumb, .hero, .stats, .value-section, .how-section, .timeline-section, footer { padding-left: 24px; padding-right: 24px; }
-    .hero { grid-template-columns: 1fr; gap: 32px; }
-    .stats { grid-template-columns: 1fr 1fr; }
-    .how-grid { grid-template-columns: 1fr 1fr; }
-    .value-section { grid-template-columns: 1fr; gap: 32px; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
-  }
-
-  @media (max-width: 600px) {
-    nav { padding: 14px 16px; }
-    .nav-links { gap: 16px; }
-    .nav-links a { font-size: 0.8rem; }
-    .breadcrumb, .hero, .stats, .value-section, .how-section, .timeline-section, footer { padding-left: 16px; padding-right: 16px; }
-    .stats { grid-template-columns: 1fr; }
-    .how-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 1.8rem; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | YOUR.NAME</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo">YOUR.NAME</a>
+  <a href="/" class="logo">Chiu-Feng</a>
   <ul class="nav-links">
-    <li><a href="#" class="active">About</a></li>
-    <li><a href="#">Projects</a></li>
-    <li><a href="#" class="nav-cta">Contact</a></li>
+    <li><a href="/" class="active">About</a></li>
+    <li class="nav-dropdown">
+      <a href="/projects/">Projects</a>
+      <ul class="dropdown-menu">
+        <li><a href="/projects/sourdough/">Sourdough</a></li>
+        <li><a href="/projects/photography/">Photography</a></li>
+        <li><a href="/projects/cooking/">Cooking</a></li>
+        <li><a href="/projects/recipes/">Recipes</a></li>
+      </ul>
+    </li>
+    <li><a href="mailto=chiufengyap+blog@gmail.com" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
 
 <!-- BREADCRUMB -->
 <div class="breadcrumb">
-  Home <span>→</span> About me
+  <a href="/">Home</a> <span>&rarr;</span> About me
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero-split">
   <div>
     <div class="hero-label">About me</div>
-    <h1>From front-end to <em>design systems</em> — focused on scale, clarity &amp; collaboration.</h1>
+    <h1>From front-end to <em>design systems</em> &mdash; focused on scale, clarity &amp; collaboration.</h1>
     <p class="hero-text">
       Toward the end of a Computer Science degree in Austin, product design became the defining career shift. Since 2020, the work has been about uniting strategy, systems, documentation, and close partnership with engineering teams.
     </p>
   </div>
   <div class="avatar-card">
-    <div class="avatar-img">👩‍💻</div>
+    <div class="avatar-img">&#x1F469;&#x200D;&#x1F4BB;</div>
     <div class="avatar-name">Your Name Here</div>
     <div class="avatar-sub">but you can call me YN :)</div>
   </div>
@@ -666,22 +97,22 @@
   <h2>Practical foundation to sustain <em>design systems</em> across multidisciplinary teams</h2>
   <div class="how-grid">
     <div class="how-card">
-      <div class="how-card-icon">⚙️</div>
+      <div class="how-card-icon">&#x2699;&#xFE0F;</div>
       <h3>Governance</h3>
       <p>Creating structure so the system keeps growing without becoming operational noise.</p>
     </div>
     <div class="how-card">
-      <div class="how-card-icon">📝</div>
+      <div class="how-card-icon">&#x1F4DD;</div>
       <h3>Documentation</h3>
-      <p>Providing context on usage, decisions, and maintenance — without turning the system into bureaucracy.</p>
+      <p>Providing context on usage, decisions, and maintenance &mdash; without turning the system into bureaucracy.</p>
     </div>
     <div class="how-card">
-      <div class="how-card-icon">🎨</div>
+      <div class="how-card-icon">&#x1F3A8;</div>
       <h3>Tokens &amp; Libraries</h3>
       <p>Organizing visual and technical foundations to scale implementation with consistency.</p>
     </div>
     <div class="how-card">
-      <div class="how-card-icon">🤝</div>
+      <div class="how-card-icon">&#x1F91D;</div>
       <h3>Engineering Partnership</h3>
       <p>Connecting stakeholders, design, and development into the same conversation.</p>
     </div>
@@ -696,44 +127,44 @@
   <div class="timeline">
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2025 — Present</div>
+      <div class="timeline-date">2025 &mdash; Present</div>
       <div class="timeline-role">Senior Product Designer</div>
       <div class="timeline-company">Design System @ Company A</div>
       <div class="timeline-desc">Systemic evolution oriented to ecosystem, brand, and operational consistency.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2024 — 2025</div>
+      <div class="timeline-date">2024 &mdash; 2025</div>
       <div class="timeline-role">Senior Product Designer</div>
       <div class="timeline-company">Design System Specialist @ Company B</div>
       <div class="timeline-desc">Governance, cross-device adaptation, and more accessible, scalable components.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2023 — 2024</div>
+      <div class="timeline-date">2023 &mdash; 2024</div>
       <div class="timeline-role">Senior Product Designer</div>
       <div class="timeline-company">Design System @ Company C</div>
       <div class="timeline-desc">Primitive and semantic tokens, onboarding, documentation, and cross-team alignment.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2021 — 2023</div>
+      <div class="timeline-date">2021 &mdash; 2023</div>
       <div class="timeline-role">Senior Product Designer</div>
       <div class="timeline-company">Design System Ops @ Company D</div>
       <div class="timeline-desc">Component scaling, system writing, prioritization, and exploration of dark mode and whitelabel.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2020 — 2021</div>
+      <div class="timeline-date">2020 &mdash; 2021</div>
       <div class="timeline-role">Product Designer</div>
       <div class="timeline-company">Design System Ops @ Company E</div>
       <div class="timeline-desc">Visual consistency, pair design, and stronger integration between design and engineering.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2013 — 2020</div>
+      <div class="timeline-date">2013 &mdash; 2020</div>
       <div class="timeline-role">Front-end Developer</div>
-      <div class="timeline-company">Various Agencies & Studios</div>
+      <div class="timeline-company">Various Agencies &amp; Studios</div>
       <div class="timeline-desc">Technical foundation that consolidated interface criteria, feasibility, and implementation fluency.</div>
     </div>
   </div>
@@ -748,7 +179,7 @@
     <li><a href="#">Dribbble</a></li>
     <li><a href="#">Figma</a></li>
   </ul>
-  <div class="footer-note">Made with ♥ by me</div>
+  <div class="footer-note">Made with &hearts; by me</div>
 </footer>
 
 </body>
