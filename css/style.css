@@ -728,6 +728,25 @@ nav {
   margin: 24px 0;
 }
 
+/* Photo Collage */
+.photo-collage {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.photo-collage img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  transition: transform 0.3s ease;
+}
+
+.photo-collage img:hover {
+  transform: scale(1.05);
+}
+
 /* ============================================
    FOOTER
    ============================================ */
