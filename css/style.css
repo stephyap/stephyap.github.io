@@ -240,9 +240,9 @@ nav {
   margin: 0 auto;
   padding: 40px 48px 0;
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+grid-template-columns: 1.2fr 0.8fr;
   gap: 64px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .hero-label {
