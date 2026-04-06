@@ -274,11 +274,12 @@ nav {
 .hero-image-block {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .hero-inline-avatar {
-  width: min(100%, 360px);
+  width: min(100%, 380px);
+  height: 100%;
   border-radius: 28px;
   overflow: hidden;
   border: none;
@@ -286,10 +287,10 @@ nav {
 }
 
 .hero-inline-avatar img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 @media (max-width: 900px) {
